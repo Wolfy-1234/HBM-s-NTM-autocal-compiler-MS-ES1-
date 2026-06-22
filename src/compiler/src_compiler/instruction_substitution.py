@@ -43,6 +43,37 @@ def substitute_inst(token):
             return f"load {data[1]}\nround\nsend {data[0].replace("\"","").split("%")[0]}"
         case "infloop":
             return "infloop"
+        case "if":
+            statement = data
+            i = 0
+            while (i < statement.__len__()):
+                if (["+", "-", "*", "/", "="].count(statement[i]) == 0 and not statement[i].isnumeric() and i != 1):
+                    statement[i] = f"${statement[i]}$"
+                i += 1
+
+            output = ""
+            if(statement[2][0] == "$"):
+                output += f"load {statement[2]}\n"
+            else:
+                output += f"buffer {statement[2]}\n"
+
+            match statement[1]:
+                case "==":
+                    output += "eq "
+                case ">":
+                    output += "gtb "
+                case ">=":
+                    output += "geb "
+                case "<":
+                    output += "ltb "
+                case "<=":
+                    output += "leb "
+                case _:
+                    print(f"comparison value {statement[1]} is not supported or inexistent")
+
+            output += f"{statement[0]}"
+            return output
+
         case _:
             print(f"token type {type} at line {token.source_line} is undefined or not supported.")
             return "undefined"

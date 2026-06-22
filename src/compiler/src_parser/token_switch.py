@@ -32,6 +32,8 @@ def identify_token(input: str, source_line, second_char = "", third_char = "", i
                 return "infloop"
             else:
                 return "not supported yet"
+        case "if":
+            return "if"
         case _:
             if(second_char == "="):
                 return "expression"

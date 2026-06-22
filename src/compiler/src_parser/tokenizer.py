@@ -66,4 +66,5 @@ def tokenize(input: str) -> str:
             if(["(", ")", "=", ","].count(instruction) == 0):
                 current_token.data.append(instruction)
         i += 1
+    print(instruction_list)
     return token_list
